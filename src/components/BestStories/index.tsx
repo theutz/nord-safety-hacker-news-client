@@ -2,9 +2,16 @@ import * as React from 'react';
 
 class BestStories extends React.Component<object, object> {
   render() {
-    const props = this.props;
 
-    return <div {...props} />;
+    return (
+      <div className="container">
+        <div className="columns">
+          <div className="column">
+            <h2 className="title">Best Stories</h2>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
