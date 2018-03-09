@@ -8,10 +8,12 @@ class App extends React.Component {
     return (
       <Router>
         <div>
-          <nav className="navbar">
-            <div className="navbar-brand">
-              <div className="navbar-item">
-                <Link to="/">Hacker News</Link>
+          <nav className="navbar is-primary">
+            <div className="container">
+              <div className="navbar-brand">
+                <div className="navbar-item">
+                  <Link to="/" className="has-text-white">Hacker News</Link>
+                </div>
               </div>
             </div>
           </nav>
