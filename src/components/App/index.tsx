@@ -1,20 +1,25 @@
 import * as React from 'react';
+import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
 //
-import Section from '../Section';
+import MainContent from '../MainContent';
 
 class App extends React.Component {
   render() {
     return (
-      <Section>
-        <div className="App">
-          <header className="App-header">
-            <h1 className="App-title">Welcome to React</h1>
-          </header>
-          <p className="App-intro">
-            To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+      <Router>
+        <div>
+          <nav className="navbar">
+            <div className="navbar-brand">
+              <div className="navbar-item">
+                <Link to="/">Hacker News</Link>
+              </div>
+            </div>
+          </nav>
+          <section className="section">
+            <Route path="/" component={MainContent} />
+          </section>
         </div>
-      </Section>
+      </Router>
     );
   }
 }

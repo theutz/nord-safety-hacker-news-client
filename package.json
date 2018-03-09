@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@types/classnames": "^2.2.3",
+    "@types/react-router-dom": "^4.2.4",
     "bulma": "^0.6.2",
     "classnames": "^2.2.5",
     "react": "^16.2.0",
