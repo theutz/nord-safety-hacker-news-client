@@ -2,7 +2,7 @@ import * as React from 'react';
 import { AxiosResponse } from 'axios';
 import { Route } from 'react-router-dom';
 //
-import client, { all, spread } from './client';
+import client, { all, spread } from '../../client';
 import { Story, Stories } from '../../types';
 import BestStories from '../BestStories';
 import Comments from '../Comments';
@@ -28,7 +28,7 @@ class App extends React.Component<AppProps, AppState> {
   loadStories = () => {
     client.get('/beststories.json')
       .then(({ data }: { data: number[] }) => {
-        all(data.map((id: number) =>
+        all(data.slice(0, 20).map((id: number) =>
           client.get(`/item/${id}.json`)
         )).then(spread((...args: AxiosResponse<object>[]) => {
           this.setState({
