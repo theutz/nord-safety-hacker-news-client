@@ -1,14 +1,15 @@
 import * as React from 'react';
 //
-import { Stories } from '../../types';
+import { Stories, Story } from '../../types';
 
 export interface BestStoriesProps {
   stories: Stories;
+  onSelectStory(story: Story): void;
 }
 
 class BestStories extends React.Component<BestStoriesProps> {
   render() {
-    const { stories } = this.props;
+    const { stories, onSelectStory } = this.props;
 
     return (
       <div className="container">
@@ -34,12 +35,18 @@ class BestStories extends React.Component<BestStoriesProps> {
                   </div>
                   <div className="card-footer">
                     <div className="card-footer-item">
-                      <div className="content">
+                      <a
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onSelectStory(story);
+                        }}
+                        className="content"
+                      >
                         <span className="icon">
                           <i className="fas fa-comments" />
                         </span>
                         {story.descendants}
-                      </div>
+                      </a>
                     </div>
                     <div className="card-footer-item">
                       <a href={story.url} target="_blank">

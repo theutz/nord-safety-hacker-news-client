@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { AxiosResponse } from 'axios';
 //
 import client, { all, spread } from './client';
 import { Story, Stories } from '../../types';
 import BestStories from '../BestStories';
+import Comments from '../Comments';
 import Navbar from '../Navbar';
 
 export interface AppProps { }
@@ -40,22 +40,29 @@ class App extends React.Component<AppProps, AppState> {
       });
   }
 
+  resetActiveStory = () =>
+    this.setState({ activeStory: undefined, storyIsSelected: false })
+
+  setActiveStory = (story: Story) => {
+    this.setState({ activeStory: story, storyIsSelected: true });
+  }
+
   render() {
-    const { allStories } = this.state;
+    const { allStories, storyIsSelected, activeStory } = this.state;
 
     return (
-      <Router>
-        <div>
-          <Navbar />
-          <Route
-            exact={true}
-            path="/"
-            render={
-              routeProps =>
-                <BestStories {...routeProps} stories={allStories} />}
-          />
-        </div>
-      </Router>
+      <div>
+        <Navbar onBrandClick={this.resetActiveStory} />
+        <section className="section">
+          {storyIsSelected && activeStory
+            ? <Comments story={activeStory} />
+            : <BestStories
+              stories={allStories}
+              onSelectStory={this.setActiveStory}
+            />
+          }
+        </section>
+      </div>
     );
   }
 }
