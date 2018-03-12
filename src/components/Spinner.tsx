@@ -1,12 +1,14 @@
 import * as React from 'react';
 
-export interface SpinnerProps { }
+export interface SpinnerProps {
+  size?: string;
+}
 
-const Spinner = ({ }: SpinnerProps) => (
+const Spinner = ({ size = '4x' }: SpinnerProps) => (
   <div className="columns is-centered">
     <div className="column is-narrow">
       <span className="icon has-text-info">
-        <i className="fas fa-4x fa-spinner fa-pulse" />
+        <i className={`fas ${!!size && `fa-${size}`} fa-spinner fa-pulse`} />
       </span>
     </div>
   </div>
