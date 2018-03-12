@@ -12,12 +12,12 @@ class Comment extends React.Component<CommentProps> {
 
     return (
       <article className="media">
+        <div className="media-left">
+          <span className="icon has-text-info"><i className="fas fa-comment fa-lg" /></span>
+        </div>
         <div className="media-content">
-          <div className="content">
-            <p>
-              <strong>{comment.by}</strong>
-            </p>
-          </div>
+          <strong className="has-text-grey">{comment.by}</strong>
+          <div className="content" dangerouslySetInnerHTML={{ __html: comment.text }} />
         </div>
       </article>);
   }

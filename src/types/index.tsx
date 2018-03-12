@@ -7,6 +7,7 @@ export interface Story {
   kids: number[];
   url: string;
   descendants: number;
+  text: string;
 }
 
 export type Stories = Story[];
