@@ -7,6 +7,7 @@ import { Story, Stories } from '../../types';
 import BestStories from '../BestStories';
 import Comments from '../Comments';
 import Navbar from '../Navbar';
+import Spinner from '../Spinner';
 
 export interface AppProps { }
 
@@ -44,24 +45,29 @@ class App extends React.Component<AppProps, AppState> {
       <div>
         <Navbar />
         <section className="section">
-          <Route
-            exact={true}
-            path="/"
-            render={
-              routeProps =>
-                <BestStories stories={allStories} />}
-          />
-          <Route
-            path="/comments/:id"
-            render={
-              routeProps =>
-                <Comments
-                  story={
-                    allStories
-                      .find(s =>
-                        s.id === +routeProps.match.params.id)}
-                />}
-          />
+          {allStories.length > 0
+            ? <React.Fragment>
+              <Route
+                exact={true}
+                path="/"
+                render={
+                  routeProps =>
+                    <BestStories stories={allStories} />}
+              />
+              <Route
+                path="/comments/:id"
+                render={
+                  routeProps =>
+                    <Comments
+                      story={
+                        allStories
+                          .find(s =>
+                            s.id === +routeProps.match.params.id)}
+                    />}
+              />
+            </React.Fragment>
+            : <Spinner />
+          }
         </section>
       </div>
     );
