@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { AxiosResponse } from 'axios';
+import { Route } from 'react-router-dom';
 //
 import client, { all, spread } from './client';
 import { Story, Stories } from '../../types';
@@ -11,15 +12,12 @@ export interface AppProps { }
 
 export interface AppState {
   allStories: Stories;
-  activeStory?: Story;
-  allStoriesLoaded: boolean;
-  storyIsSelected: boolean;
 }
 
 class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
-    this.state = { allStories: [], allStoriesLoaded: false, storyIsSelected: false };
+    this.state = { allStories: [] };
   }
 
   componentDidMount() {
@@ -34,33 +32,36 @@ class App extends React.Component<AppProps, AppState> {
         )).then(spread((...args: AxiosResponse<object>[]) => {
           this.setState({
             allStories: args.map(r => r.data as Story),
-            allStoriesLoaded: true
           });
         }));
       });
   }
 
-  resetActiveStory = () =>
-    this.setState({ activeStory: undefined, storyIsSelected: false })
-
-  setActiveStory = (story: Story) => {
-    this.setState({ activeStory: story, storyIsSelected: true });
-  }
-
   render() {
-    const { allStories, storyIsSelected, activeStory } = this.state;
+    const { allStories } = this.state;
 
     return (
       <div>
-        <Navbar onBrandClick={this.resetActiveStory} />
+        <Navbar />
         <section className="section">
-          {storyIsSelected && activeStory
-            ? <Comments story={activeStory} />
-            : <BestStories
-              stories={allStories}
-              onSelectStory={this.setActiveStory}
-            />
-          }
+          <Route
+            exact={true}
+            path="/"
+            render={
+              routeProps =>
+                <BestStories stories={allStories} />}
+          />
+          <Route
+            path="/comments/:id"
+            render={
+              routeProps =>
+                <Comments
+                  story={
+                    allStories
+                      .find(s =>
+                        s.id === +routeProps.match.params.id)}
+                />}
+          />
         </section>
       </div>
     );

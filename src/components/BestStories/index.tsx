@@ -1,15 +1,15 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 //
-import { Stories, Story } from '../../types';
+import { Stories } from '../../types';
 
 export interface BestStoriesProps {
   stories: Stories;
-  onSelectStory(story: Story): void;
 }
 
 class BestStories extends React.Component<BestStoriesProps> {
   render() {
-    const { stories, onSelectStory } = this.props;
+    const { stories } = this.props;
 
     return (
       <div className="container">
@@ -35,18 +35,12 @@ class BestStories extends React.Component<BestStoriesProps> {
                   </div>
                   <div className="card-footer">
                     <div className="card-footer-item">
-                      <a
-                        onClick={(e) => {
-                          e.preventDefault();
-                          onSelectStory(story);
-                        }}
-                        className="content"
-                      >
+                      <Link className="content" to={`/comments/${story.id}`}>
                         <span className="icon">
                           <i className="fas fa-comments" />
                         </span>
                         {story.descendants}
-                      </a>
+                      </Link>
                     </div>
                     <div className="card-footer-item">
                       <a href={story.url} target="_blank">
