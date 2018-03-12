@@ -1,11 +1,11 @@
 import * as React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { AxiosResponse } from 'axios';
 //
 import client, { all, spread } from './client';
 import { Story, Stories } from '../../types';
-import MainContent from '../MainContent';
+import BestStories from '../BestStories';
 import Navbar from '../Navbar';
-import { AxiosResponse } from 'axios';
 
 export interface AppProps { }
 
@@ -13,12 +13,13 @@ export interface AppState {
   allStories: Stories;
   activeStory?: Story;
   allStoriesLoaded: boolean;
+  storyIsSelected: boolean;
 }
 
 class App extends React.Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
-    this.state = { allStories: [], allStoriesLoaded: false };
+    this.state = { allStories: [], allStoriesLoaded: false, storyIsSelected: false };
   }
 
   componentDidMount() {
@@ -40,11 +41,19 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   render() {
+    const { allStories } = this.state;
+
     return (
       <Router>
         <div>
           <Navbar />
-          <MainContent />
+          <Route
+            exact={true}
+            path="/"
+            render={
+              routeProps =>
+                <BestStories {...routeProps} stories={allStories} />}
+          />
         </div>
       </Router>
     );
